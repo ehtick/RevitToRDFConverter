@@ -1,0 +1,12 @@
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\bin\Debug\RevitToRDFConverter.dll
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\bin\Debug\RevitToRDFConverter.pdb
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\bin\Debug\RevitAPIIFC.dll
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\bin\Debug\IntfIFCAPI.dll
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\bin\Debug\RevitAPIIFC.xml
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\obj\Debug\RevitToRDFConverter.csprojAssemblyReference.cache
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\obj\Debug\RevitToRDFConverter.csproj.CoreCompileInputs.cache
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\obj\Debug\RevitToRDFConverter.csproj.CopyComplete
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\obj\Debug\RevitToRDFConverter.dll
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\obj\Debug\RevitToRDFConverter.pdb
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\obj\Debug\RevitToRDFConverter.Properties.Resources.resources
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\obj\Debug\RevitToRDFConverter.csproj.GenerateResource.cache
