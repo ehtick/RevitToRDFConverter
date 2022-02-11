@@ -9,17 +9,18 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.UI.Selection;
 using Autodesk.Revit.ApplicationServices;
 using RestSharp;
+using System.Net.Http;
 
 namespace RevitToRDFConverter
 {
 
-    
+
 
     [Transaction(TransactionMode.Manual)]
-
+    [Regeneration(RegenerationOption.Manual)]
     public class Command : IExternalCommand
     {
-        public Result Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
+        Result IExternalCommand.Execute(ExternalCommandData commandData, ref string message, ElementSet elements)
         {
             UIApplication uiapp = commandData.Application;
             UIDocument uidoc = uiapp.ActiveUIDocument;
@@ -38,33 +39,42 @@ namespace RevitToRDFConverter
 
             }
 
-            //string url = "https://jsonplaceholder.typicode.com/posts";
+            string reader = @"@prefix ex: <https://example.com/ex#> .
+" + "\n" +
+@"@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+" + "\n" +
+@"
+" + "\n" +
+@"
+" + "\n" +
+@"ex:Alice
+" + "\n" +
+@"	a ex:Person ;
+" + "\n" +
+@"	ex:ssn ""987-65-432A"" .
+" + "\n" +
+@"  
+" + "\n" +
+@"ex:Bob
+" + "\n" +
+@"	a ex:Person ;
+" + "\n" +
+@"	ex:ssn ""123-45-6789"" ;
+" + "\n" +
+@"	ex:ssn ""124-35-6789"" .
+" + "\n" +
+@"  
+" + "\n" +
+@"ex:Calvin
+" + "\n" +
+@"	a ex:Person ;
+" + "\n" +
+@"	ex:birthDate ""1971-07-07""^^xsd:date ;
+" + "\n" +
+@"	ex:worksFor ex:UntypedCompany .";
 
-            //var client = new RestClient("url");
-
-            //var request = new RestRequest();
-
-            //var body = new post { body = "This is the test body", title = "test post request", userID = 2 };
-
-            //request.AddJsonBody(body);
-
-            //var response = client.PostAsync(request);
-
-            //Console.WriteLine(response.Status.ToString());
-
-            var client = new RestClient("http://localhost:3030/test-db/data");
-
-            var request = new RestRequest();
-
-            request.AddHeader("Content-Type", "text/turtle");
-
-            var body = new post { body = "@prefix ex: <https://example.com/ex#> ." };
-
-            request.AddBody(body);
-
-            //request.AddParameter("text/turtle", body, RestSharp.ParameterType.RequestBody);
-
-
+            var tedt = HttpClientHelper.POSTDataAsync(reader);
+                      
             TaskDialog.Show("Revit", sb.ToString());
             return Result.Succeeded;
         }
