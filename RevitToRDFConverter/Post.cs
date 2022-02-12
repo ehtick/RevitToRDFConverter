@@ -12,7 +12,8 @@ namespace RevitToRDFConverter
         public string body { get; set; }
         public string title { get; set; }
 
-        
+        public string changedRoomName { get; set; }
+
 
     }
 }
