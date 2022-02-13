@@ -31,3 +31,5 @@ C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\b
 C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\bin\Debug\System.ValueTuple.xml
 C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\obj\Debug\RevitToRDFConverter.csprojAssemblyReference.cache
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\bin\Debug\Newtonsoft.Json.dll
+C:\Users\alikuc\Desktop\codingProjects\RevitToRDFConverter\RevitToRDFConverter\bin\Debug\Newtonsoft.Json.xml

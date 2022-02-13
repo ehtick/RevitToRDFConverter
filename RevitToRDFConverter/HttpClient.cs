@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace RevitToRDFConverter
 {
@@ -17,9 +18,9 @@ namespace RevitToRDFConverter
         {
 
             var data1 = data.ToString();
-            var data2 = new StringContent(data1, Encoding.UTF8, "text/turtle");
+            var data2 = new StringContent(JsonConvert.SerializeObject(data1), Encoding.UTF8, "text/turtle");
 
-            var url = "http://localhost:3030/ny-db/data";
+            var url = "http://localhost:3500/Bot";
             HttpResponseMessage response = await client.PostAsync(url, data2);
             string result = response.Content.ReadAsStringAsync().Result;
             return result;
