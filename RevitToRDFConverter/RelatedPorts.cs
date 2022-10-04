@@ -36,6 +36,8 @@ namespace RevitToRDFConverter
             double connectorWidth;
             double connectorHeight;
             string connectedComponentID;
+            string connectorDirectionVectorZID;
+            string connectorDirectionVectorZ;
 
             foreach (Connector connector in connectorSet)
             {
@@ -51,12 +53,17 @@ namespace RevitToRDFConverter
                     //FlowDirection
                     connectorDirectionID = System.Guid.NewGuid().ToString().Replace(' ', '-');
                     connectorDirection = connector.Direction.ToString();
+                    connectorDirectionVectorZID = System.Guid.NewGuid().ToString().Replace(' ', '-');
+                    connectorDirectionVectorZ = connector.CoordinateSystem.BasisZ.ToString();
 
                     sb.Append($"inst:{connectorID} fpo:flowDirection inst:{connectorDirectionID} ." + "\n"
                                             + $"inst:{connectorDirectionID} a fpo:FlowDirection ." + "\n"
-                                            + $"inst:{connectorDirectionID} fpo:value '{connectorDirection}'^^xsd:string ." + "\n");
+                                            + $"inst:{connectorDirectionID} fpo:value '{connectorDirection}'^^xsd:string ." + "\n"
+                                            + $"inst:{connectorID} ex:hasFlowDirectionVectorZ inst:{connectorDirectionVectorZID} ." + "\n"
+                                            + $"inst:{connectorDirectionVectorZID} fpo:value '{connectorDirectionVectorZ}'^^xsd:string ." + "\n"
+                                            );
 
-                       //Size
+                    //Size
                     if (connector.Shape.ToString() == "Round")
                     {
                         connectorOuterDiameterID = System.Guid.NewGuid().ToString().Replace(' ', '-');
@@ -239,6 +246,9 @@ namespace RevitToRDFConverter
             string connectedConnectorDirection;
             string connectorOuterDiameterID;
             string connectedComponentID;
+            string connectorDirectionVectorZID;
+            string connectorDirectionVectorZ;
+
             foreach (Connector connector in connectorSet)
             {
                 if (Domain.DomainHvac == connector.Domain || Domain.DomainPiping == connector.Domain)
@@ -251,10 +261,15 @@ namespace RevitToRDFConverter
                     //FlowDirection
                     connectorDirectionID = System.Guid.NewGuid().ToString().Replace(' ', '-');
                     connectorDirection = connector.Direction.ToString();
+                    connectorDirectionVectorZID = System.Guid.NewGuid().ToString().Replace(' ', '-');
+                    connectorDirectionVectorZ = connector.CoordinateSystem.BasisZ.ToString();
 
                     sb.Append($"inst:{connectorID} fpo:flowDirection inst:{connectorDirectionID} ." + "\n"
                                             + $"inst:{connectorDirectionID} a fpo:FlowDirection ." + "\n"
-                                            + $"inst:{connectorDirectionID} fpo:value '{connectorDirection}'^^xsd:string ." + "\n");
+                                            + $"inst:{connectorDirectionID} fpo:value '{connectorDirection}'^^xsd:string ." + "\n"
+                                            + $"inst:{connectorID} ex:hasFlowDirectionVectorZ inst:{connectorDirectionVectorZID} ." + "\n"
+                                            + $"inst:{connectorDirectionVectorZID} fpo:value '{connectorDirectionVectorZ}'^^xsd:string ." + "\n"
+                                            );
 
                     if (connector.Shape.ToString() == "Round")
                     {
@@ -371,6 +386,8 @@ namespace RevitToRDFConverter
             double connectorWidth;
             double connectorHeight;
             string connectedComponentID;
+            string connectorDirectionVectorZID;
+            string connectorDirectionVectorZ;
 
             foreach (Connector connector in connectorSet)
             {
@@ -385,13 +402,18 @@ namespace RevitToRDFConverter
                     //FlowDirection
                     connectorDirectionID = System.Guid.NewGuid().ToString().Replace(' ', '-');
                     connectorDirection = connector.Direction.ToString();
+                    connectorDirectionVectorZID = System.Guid.NewGuid().ToString().Replace(' ', '-');
+                    connectorDirectionVectorZ = connector.CoordinateSystem.BasisZ.ToString();
 
                     sb.Append($"inst:{connectorID} fpo:flowDirection inst:{connectorDirectionID} ." + "\n"
                                             + $"inst:{connectorDirectionID} a fpo:FlowDirection ." + "\n"
-                                            + $"inst:{connectorDirectionID} fpo:value '{connectorDirection}'^^xsd:string ." + "\n");
+                                            + $"inst:{connectorDirectionID} fpo:value '{connectorDirection}'^^xsd:string ." + "\n"
+                                            + $"inst:{connectorID} ex:hasFlowDirectionVectorZ inst:{connectorDirectionVectorZID} ." + "\n"
+                                            + $"inst:{connectorDirectionVectorZID} fpo:value '{connectorDirectionVectorZ}'^^xsd:string ." + "\n"
+                                            );
 
                     //Port size
-                        string outerdiameterID = System.Guid.NewGuid().ToString().Replace(' ', '-');
+                    string outerdiameterID = System.Guid.NewGuid().ToString().Replace(' ', '-');
                         double outerDiameterValue = UnitUtils.ConvertFromInternalUnits(connector.Radius*2, UnitTypeId.Meters);
                         sb.Append($"inst:{connectorID} fpo:outerDiameter inst:{outerdiameterID} ." + "\n"
                          + $"inst:{outerdiameterID} a fpo:OuterDiameter ." + "\n"
@@ -532,6 +554,8 @@ namespace RevitToRDFConverter
             double connectorWidth;
             double connectorHeight;
             string connectedComponentID;
+            string connectorDirectionVectorZID;
+            string connectorDirectionVectorZ;
 
             foreach (Connector connector in connectorSet)
             {
@@ -547,10 +571,15 @@ namespace RevitToRDFConverter
                     //FlowDirection
                     connectorDirectionID = System.Guid.NewGuid().ToString().Replace(' ', '-');
                     connectorDirection = connector.Direction.ToString();
+                    connectorDirectionVectorZID = System.Guid.NewGuid().ToString().Replace(' ', '-');
+                    connectorDirectionVectorZ = connector.CoordinateSystem.BasisZ.ToString();
 
                     sb.Append($"inst:{connectorID} fpo:flowDirection inst:{connectorDirectionID} ." + "\n"
                                             + $"inst:{connectorDirectionID} a fpo:FlowDirection ." + "\n"
-                                            + $"inst:{connectorDirectionID} fpo:value '{connectorDirection}'^^xsd:string ." + "\n");
+                                            + $"inst:{connectorDirectionID} fpo:value '{connectorDirection}'^^xsd:string ." + "\n"
+                                            + $"inst:{connectorID} ex:hasFlowDirectionVectorZ inst:{connectorDirectionVectorZID} ." + "\n"
+                                            + $"inst:{connectorDirectionVectorZID} fpo:value '{connectorDirectionVectorZ}'^^xsd:string ." + "\n"
+                                            );
 
                     //Size
                     if (connector.Shape.ToString() == "Round")

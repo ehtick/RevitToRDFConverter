@@ -151,8 +151,9 @@ namespace RevitToRDFConverter
                 //    ElementId superSystemType = system.GetTypeId();
                 //    string superSystemName = doc.GetElement(superSystemType).LookupParameter("Family Name").AsValueString();
                 //    string superSystemID = doc.GetElement(superSystemType).UniqueId;
-
                 string fluidID = System.Guid.NewGuid().ToString().Replace(' ', '-');
+                string flowTypeID = System.Guid.NewGuid().ToString().Replace(' ', '-');
+
                 string fluidTemperatureID = System.Guid.NewGuid().ToString().Replace(' ', '-');
                 double fluidTemperature = UnitUtils.ConvertFromInternalUnits(system.LookupParameter("Fluid TemperatureX").AsDouble(), UnitTypeId.Celsius);
 
@@ -161,10 +162,13 @@ namespace RevitToRDFConverter
                     case DuctSystemType.SupplyAir:
                         sb.Append($"inst:{systemID} a fso:SupplySystem ." + "\n" +
                             $"inst:{systemID} rdfs:label '{systemName}'^^xsd:string ." + "\n" +
-
+                            
                             $"inst:{systemID} fso:hasFlow inst:{fluidID} ." + "\n" +
-
                             $"inst:{fluidID} a fso:Flow ." + "\n" +
+                            $"inst:{fluidID} fpo:flowType inst:{flowTypeID} ." + "\n" +
+                            $"inst:{flowTypeID} a fpo:FlowType ." + "\n" +
+                            $"inst:{flowTypeID} fpo:value 'Air'^^xsd:string ." + "\n" +
+
                             $"inst:{fluidID} fpo:temperature inst:{fluidTemperatureID} ." + "\n" +
                             $"inst:{fluidTemperatureID} a fpo:temperature ." + "\n" +
                             $"inst:{fluidTemperatureID} fpo:value '{fluidTemperature}'^^xsd:double ." + "\n" +
@@ -173,10 +177,13 @@ namespace RevitToRDFConverter
                     case DuctSystemType.ReturnAir:
                         sb.Append($"inst:{systemID} a fso:ReturnSystem ." + "\n"
                              + $"inst:{systemID} rdfs:label '{systemName}'^^xsd:string ." + "\n" +
-
-                              $"inst:{systemID} fso:hasFlow inst:{fluidID} ." + "\n" +
-
+                            
+                             $"inst:{systemID} fso:hasFlow inst:{fluidID} ." + "\n" +
                             $"inst:{fluidID} a fso:Flow ." + "\n" +
+                            $"inst:{fluidID} fpo:flowType inst:{flowTypeID} ." + "\n" +
+                            $"inst:{flowTypeID} a fpo:FlowType ." + "\n" +
+                            $"inst:{flowTypeID} fpo:value 'Air'^^xsd:string ." + "\n" +
+
                             $"inst:{fluidID} fpo:temperature inst:{fluidTemperatureID} ." + "\n" +
                             $"inst:{fluidTemperatureID} a fpo:temperature ." + "\n" +
                             $"inst:{fluidTemperatureID} fpo:value '{fluidTemperature}'^^xsd:double ." + "\n" +
@@ -327,7 +334,7 @@ namespace RevitToRDFConverter
                     if (component.Symbol.LookupParameter("FSC_type").AsString() == "Fan")
                     {
                         //Type 
-                        sb.Append($"inst:{componentID} a fpo:{componentType} ." + "\n");
+                        sb.Append($"inst:{componentID} a fso:{componentType} ." + "\n");
 
                         if (component.LookupParameter("FSC_pressureCurve") != null)
                         {
@@ -356,7 +363,7 @@ namespace RevitToRDFConverter
                     if (component.Symbol.LookupParameter("FSC_type").AsString() == "Pump")
                     {
                         //Type 
-                        sb.Append($"inst:{componentID} a fpo:{componentType} ." + "\n");
+                        sb.Append($"inst:{componentID} a fso:{componentType} ." + "\n");
 
                         if (component.LookupParameter("FSC_pressureCurve") != null)
                         {
@@ -385,8 +392,8 @@ namespace RevitToRDFConverter
                     if (component.Symbol.LookupParameter("FSC_type").AsString() == "MotorizedValve" || component.Symbol.LookupParameter("FSC_type").AsString() == "BalancingValve")
                     {
                         //Type 
-                        sb.Append($"inst:{componentID} a fpo:{componentType} ." + "\n"
-                        + $"fpo:{componentType} rdfs:subClassOf fpo:Valve ." + "\n");
+                        sb.Append($"inst:{componentID} a fso:{componentType} ." + "\n"
+                        + $"fso:{componentType} rdfs:subClassOf fso:Valve ." + "\n");
 
                         if (component.LookupParameter("FSC_kv") != null)
                         {
@@ -413,8 +420,8 @@ namespace RevitToRDFConverter
                     if (component.Symbol.LookupParameter("FSC_type").AsString() == "Shunt")
                     {
                         //Type 
-                        sb.Append($"inst:{componentID} a fpo:{componentType} ." + "\n"
-                        + $"fpo:{componentType} rdfs:subClassOf fpo:Valve ." + "\n");
+                        sb.Append($"inst:{componentID} a fso:{componentType} ." + "\n"
+                        + $"fso:{componentType} rdfs:subClassOf fpo:Valve ." + "\n");
 
                         if (component.LookupParameter("FSC_hasCheckValve") != null)
                         {
@@ -431,8 +438,8 @@ namespace RevitToRDFConverter
                     if (component.Symbol.LookupParameter("FSC_type").AsString() == "MotorizedDamper" || component.Symbol.LookupParameter("FSC_type").AsString() == "BalancingDamper")
                     {
                         //Type 
-                        sb.Append($"inst:{componentID} a fpo:{componentType} ." + "\n"
-                        + $"fpo:{componentType} rdfs:subClassOf fpo:Damper ." + "\n");
+                        sb.Append($"inst:{componentID} a fso:{componentType} ." + "\n"
+                        + $"fso:{componentType} rdfs:subClassOf fpo:Damper ." + "\n");
 
                         if (component.LookupParameter("FSC_kv") != null)
                         {
@@ -459,7 +466,7 @@ namespace RevitToRDFConverter
                     if (component.Category.Name == "Pipe Fittings")
                     {
                         string fittingType = ((MechanicalFitting)component.MEPModel).PartType.ToString();
-                        sb.Append($"inst:{componentID} a fpo:{fittingType} ." + "\n");
+                        sb.Append($"inst:{componentID} a fso:{fittingType} ." + "\n");
 
                         if (fittingType.ToString() == "Tee")
                         {
@@ -501,6 +508,27 @@ namespace RevitToRDFConverter
                             sb.Append($"inst:{componentID} fpo:materialType inst:{materialTypeID} ." + "\n"
                              + $"inst:{materialTypeID} a fpo:MaterialType ." + "\n"
                              + $"inst:{materialTypeID} fpo:value  '{materialTypeValue}'^^xsd:string ." + "\n");
+
+                            if (component.LookupParameter("OffsetHeight") != null && component.LookupParameter("OffsetHeight").AsDouble() > 0)
+                            {
+                                //Length
+                                string lengthID = System.Guid.NewGuid().ToString().Replace(' ', '-');
+                                double lengthValue = UnitUtils.ConvertFromInternalUnits(component.LookupParameter("OffsetHeight").AsDouble(), UnitTypeId.Meters);
+                                sb.Append($"inst:{componentID} fpo:length inst:{lengthID} ." + "\n"
+                                 + $"inst:{lengthID} a fpo:Length ." + "\n"
+                                 + $"inst:{lengthID} fpo:value '{lengthValue}'^^xsd:double ." + "\n"
+                                 + $"inst:{lengthID} fpo:unit 'Meter'^^xsd:string ." + "\n");
+                            }
+                            else {
+                                string lengthID = System.Guid.NewGuid().ToString().Replace(' ', '-');
+                                double lengthValue = 0.02;
+                                sb.Append($"inst:{componentID} fpo:length inst:{lengthID} ." + "\n"
+                               + $"inst:{lengthID} a fpo:Length ." + "\n"
+                               + $"inst:{lengthID} fpo:value '{lengthValue}'^^xsd:double ." + "\n"
+                               + $"inst:{lengthID} fpo:unit 'Meter'^^xsd:string ." + "\n");
+                            }
+
+
                         }
                     }
 
@@ -509,7 +537,7 @@ namespace RevitToRDFConverter
                     {
 
                         string fittingType = ((MechanicalFitting)component.MEPModel).PartType.ToString();
-                        sb.Append($"inst:{componentID} a fpo:{fittingType} ." + "\n");
+                        sb.Append($"inst:{componentID} a fso:{fittingType} ." + "\n");
 
                         if (fittingType.ToString() == "Tee")
                         {
@@ -551,6 +579,26 @@ namespace RevitToRDFConverter
                             sb.Append($"inst:{componentID} fpo:materialType inst:{materialTypeID} ." + "\n"
                              + $"inst:{materialTypeID} a fpo:MaterialType ." + "\n"
                              + $"inst:{materialTypeID} fpo:value '{materialTypeValue}'^^xsd:string ." + "\n");
+
+                            if (component.LookupParameter("OffsetHeight") != null && component.LookupParameter("OffsetHeight").AsDouble() > 0)
+                            {
+                                //Length
+                                string lengthID = System.Guid.NewGuid().ToString().Replace(' ', '-');
+                                double lengthValue = UnitUtils.ConvertFromInternalUnits(component.LookupParameter("OffsetHeight").AsDouble(), UnitTypeId.Meters);
+                                sb.Append($"inst:{componentID} fpo:length inst:{lengthID} ." + "\n"
+                                 + $"inst:{lengthID} a fpo:Length ." + "\n"
+                                 + $"inst:{lengthID} fpo:value '{lengthValue}'^^xsd:double ." + "\n"
+                                 + $"inst:{lengthID} fpo:unit 'Meter'^^xsd:string ." + "\n");
+                            }
+                            else
+                            {
+                                string lengthID = System.Guid.NewGuid().ToString().Replace(' ', '-');
+                                double lengthValue = 0.02;
+                                sb.Append($"inst:{componentID} fpo:length inst:{lengthID} ." + "\n"
+                               + $"inst:{lengthID} a fpo:Length ." + "\n"
+                               + $"inst:{lengthID} fpo:value '{lengthValue}'^^xsd:double ." + "\n"
+                               + $"inst:{lengthID} fpo:unit 'Meter'^^xsd:string ." + "\n");
+                            }
                         }
 
                     }
@@ -560,7 +608,7 @@ namespace RevitToRDFConverter
                     if (component.Symbol.LookupParameter("FSC_type").AsString() == "Radiator")
                     {
                         //Type
-                        sb.Append($"inst:{componentID} a fpo:SpaceHeater ." + "\n");
+                        sb.Append($"inst:{componentID} a fso:SpaceHeater ." + "\n");
 
                         //DesignHeatPower
                         string designHeatPowerID = System.Guid.NewGuid().ToString().Replace(' ', '-');
@@ -584,7 +632,7 @@ namespace RevitToRDFConverter
                     if (component.Symbol.LookupParameter("FSC_type").AsString() == "AirTerminal")
                     {
                         //Type
-                        sb.Append($"inst:{componentID} a fpo:{componentType} ." + "\n");
+                        sb.Append($"inst:{componentID} a fso:{componentType} ." + "\n");
 
                         if (component.LookupParameter("System Classification").AsString() == "Return Air")
                         {
@@ -715,8 +763,9 @@ namespace RevitToRDFConverter
                         //Type
                         string componentType = component.Symbol.LookupParameter("FSC_type").AsString();
                         string componentID = component.UniqueId.ToString();
-
-                        sb.Append($"inst:{componentID} a fpo:{componentType} ." + "\n");
+                        string revitID = component.Id.ToString();
+                        sb.Append($"inst:{componentID} ex:RevitID inst:{revitID} ." + "\n");
+                        sb.Append($"inst:{componentID} a fso:{componentType} ." + "\n");
 
                         if (component.LookupParameter("FSC_nomPower") != null)
                         {
@@ -747,8 +796,10 @@ namespace RevitToRDFConverter
 
                 //Type
                 string componentID = component.UniqueId.ToString();
-
-                sb.Append($"inst:{componentID} a fpo:Pipe ." + "\n");
+                string revitID = component.Id.ToString();
+                sb.Append(
+                    $"inst:{componentID} a fso:Pipe ." + "\n" + 
+                    $"inst:{componentID} ex:RevitID inst:{revitID} ." + "\n" );
 
                 if (component.PipeType.Roughness != null)
                 {
@@ -819,8 +870,11 @@ namespace RevitToRDFConverter
 
                 //Type
                 string componentID = component.UniqueId.ToString();
-
-                sb.Append($"inst:{componentID} a fpo:Duct ." + "\n");
+                string revitID = component.Id.ToString();
+               
+                sb.Append(
+                    $"inst:{componentID} a fso:Duct ." + "\n" +
+                    $"inst:{componentID} ex:RevitID inst:{revitID} ." + "\n");
 
 
                 if (component.DuctType.Roughness != null)
