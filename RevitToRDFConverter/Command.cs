@@ -485,7 +485,7 @@ namespace RevitToRDFConverter
                             {
                                 //Angle
                                 string angleID = System.Guid.NewGuid().ToString().Replace(' ', '-'); ;
-                                double angleValue = UnitUtils.ConvertFromInternalUnits(component.LookupParameter("Angle").AsDouble(), UnitTypeId.Pascals);
+                                double angleValue = UnitUtils.ConvertFromInternalUnits(component.LookupParameter("Angle").AsDouble(), UnitTypeId.Degrees);
                                 sb.Append($"inst:{componentID} fpo:angle inst:{angleID} ." + "\n"
                                  + $"inst:{angleID} a fpo:Angle ." + "\n"
                                  + $"inst:{angleID} fpo:value '{angleValue}'^^xsd:double ." + "\n"
@@ -692,22 +692,22 @@ namespace RevitToRDFConverter
 
                             //Fictive pressureDrop
                             string pressureDropID = System.Guid.NewGuid().ToString().Replace(' ', '-'); ;
-                            double pressureDropValue = 0;
+                            double pressureDropValue = 5;
                             sb.Append($"inst:{connectorID} fpo:pressureDrop inst:{pressureDropID} ." + "\n"
                            + $"inst:{pressureDropID} a fpo:PressureDrop ." + "\n"
                            + $"inst:{pressureDropID} fpo:value '{pressureDropValue}'^^xsd:double ." + "\n"
                            + $"inst:{pressureDropID} fpo:unit 'Pascal'^^xsd:string ." + "\n");
 
-                            if (component.LookupParameter("Flow") != null)
-                            {
-                                //Flow rate
-                                string flowID = System.Guid.NewGuid().ToString().Replace(' ', '-');
-                                double flowValue = UnitUtils.ConvertFromInternalUnits(component.LookupParameter("Flow").AsDouble(), UnitTypeId.LitersPerSecond);
-                                sb.Append($"inst:{connectorID} fpo:flowRate inst:{flowID} ." + "\n"
-                                 + $"inst:{flowID} a fpo:FlowRate ." + "\n"
-                                 + $"inst:{flowID} fpo:value '{flowValue}'^^xsd:double ." + "\n"
-                                 + $"inst:{flowID} fpo:unit 'Liters per second'^^xsd:string ." + "\n");
-                            }
+                            //if (component.LookupParameter("Flow") != null)
+                            //{
+                            //    //Flow rate
+                            //    string flowID = System.Guid.NewGuid().ToString().Replace(' ', '-');
+                            //    double flowValue = UnitUtils.ConvertFromInternalUnits(component.LookupParameter("Flow").AsDouble(), UnitTypeId.LitersPerSecond);
+                            //    sb.Append($"inst:{connectorID} fpo:flowRate inst:{flowID} ." + "\n"
+                            //     + $"inst:{flowID} a fpo:FlowRate ." + "\n"
+                            //     + $"inst:{flowID} fpo:value '{flowValue}'^^xsd:double ." + "\n"
+                            //     + $"inst:{flowID} fpo:unit 'Liters per second'^^xsd:string ." + "\n");
+                            //}
 
                         
 
